@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useStoreProvider } from "../Store/store";
+const { REACT_APP_API_HOST } = process.env;
 
 const useFolderTree = () => {
   const [folderTree, setFolderTree] = useState();
@@ -11,7 +12,7 @@ const useFolderTree = () => {
       if (obj.children.length > 0) {
         await recursivelyStoreAllFiles(obj.children);
       } else {
-        const result = await axios.post(`/rpc.FolderService/Items`, {
+        const result = await axios.post(`${REACT_APP_API_HOST}/rpc.FolderService/Items`, {
           folderId: `${obj.virtual_id}`,
         });
         obj.children = result.data.items;
